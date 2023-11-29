@@ -1,6 +1,7 @@
 import configparser
 import os
 
+
 class Config:
     def __init__(self, path):
         self.config = configparser.ConfigParser()
@@ -16,6 +17,7 @@ class Config:
 
     def getint(self, section, option, fallback=None):
         return self.config.getint(section, option, fallback=fallback)
+
 
 # get config.ini
 config_path = os.path.join(os.path.dirname(__file__), 'config.ini')

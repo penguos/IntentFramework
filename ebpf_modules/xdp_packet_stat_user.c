@@ -58,8 +58,8 @@ struct holo_pkt_info{
     u8  tos;
     u8  iph_len;
     u16 tot_len;
-    __be32 src_addr;
-    __be32 dst_addr;
+    u32 src_addr;
+    u32 dst_addr;
     u16 tcp_src;
     u16 tcp_dst;
     u32 tcp_seq;

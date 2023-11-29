@@ -1,11 +1,17 @@
 import time
 import pandas as pd
 import numpy as np
-
+import os
 class TcpDataProcessor:
     def __init__(self, file_path):
         self.file_path = file_path
+        # Check if the input file exists and is readable
+        if not os.path.isfile(self.file_path):
+            raise FileNotFoundError(f"The input file does not exist: {self.file_path}")
+        if not os.access(self.file_path, os.R_OK):
+            raise PermissionError(f"The input file is not readable: {self.file_path}")
 
+    # tcp record output should be periodically parsed
     def read_file_periodically(self):
         last_line_count = 0
         df = pd.DataFrame()
@@ -40,7 +46,7 @@ class TcpDataProcessor:
         time_list, retrans_list, retrans_done_list, rtt_list, rtt_var_list, delivery_rate_list, cwnd_list, lost_list, reorder_list, rto_list = [list() for _ in range(10)]
 
 
-        # use “ retrans" because some ss files has "byte_retrans"
+        # use "retrans" because some ss files has "byte_retrans"
         tcp_ss_key_retrans, tcp_ss_key_rtt, tcp_ss_key_rto, tcp_ss_key_reordering, tcp_ss_key_delivery_rate = "retrans", "rtt", "rto", "reordering", "delivery_rate"
         tcp_ss_key_cwnd, tcp_ss_key_lost = "cwnd:", "lost:"
         retrans_count, retrans_count_done = 0, 0
@@ -54,10 +60,8 @@ class TcpDataProcessor:
                     continue
 
                 syn_sent = False
-
                 if val == "SYN-SENT":
                     syn_sent = True
-
                 if syn_sent:
                     break
 
@@ -65,7 +69,6 @@ class TcpDataProcessor:
                     if not flag_dict['cwnd']:
                         cwnd_list.append(float(val.split(':')[1]))
                         flag_dict['cwnd'] = True
-                        empty_flag = 1
                         # cwnd will alway present so we add time here
                         time_list.append(line[0])
 
@@ -89,13 +92,11 @@ class TcpDataProcessor:
                     rtt_list.append(float(val.split('/')[0].split(':')[1]))
                     flag_dict['rtt'] = True
 
-
                 if tcp_ss_key_rto in str(val):
                     if flag_dict['rto']:
                         rto_list.pop()
                     rto_list.append(float(val.split(':')[1]))
                     flag_dict['rto'] = True
-
 
                 if tcp_ss_key_reordering in str(val):
                     if flag_dict['reorder']:
@@ -104,7 +105,6 @@ class TcpDataProcessor:
                     flag_dict['reorder'] = True
 
                 if tcp_ss_key_lost in str(val):
-                    # print(" " + val)
                     if flag_dict['lost']:
                         lost_list.pop()
                     lost_list.append(float(val.split(':')[1]))
@@ -131,7 +131,7 @@ class TcpDataProcessor:
             if not flag_dict['cwnd']:
                 cwnd_list.append(0)
 
-
+            # make sure all required keys have same number of values
             assert len(cwnd_list) == len(rtt_var_list) == len(rtt_list) == len(retrans_list) == len(rto_list) == len(time_list)
 
         tcp_ss_dict = {"cwnd": cwnd_list, "rtt": rtt_list,
@@ -141,5 +141,5 @@ class TcpDataProcessor:
 
 
 if __name__ == "__main__":
-    processor = TcpDataProcessor('D:/data/Mininet_IWQOS/Path_Variation/BBR/normal/P1/hologram_ss_mininet_test_to_server_512000_30_p1.output.clean')
+    processor = TcpDataProcessor('D:/data/Mininet_IWQOS/Path_Variation/BBR/normal/P1/tcp_ss_example_data')
     processor.read_file_periodically()

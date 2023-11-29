@@ -10,8 +10,6 @@ from mininet.link import TCLink, Intf
 from mininet.nodelib import NAT
 
 def topology():
-    monitor = 'Yes'
-
     # 1） create Mininet object*/
     net = Mininet(controller=RemoteController, switch=OVSSwitch, autoSetMacs=True, autoStaticArp=False)
 
