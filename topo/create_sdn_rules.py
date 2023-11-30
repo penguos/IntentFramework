@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'config'))
 from config.config_parser import app_config
 import collections
-from backup.sdn_http import SdnRequests
+from sdn_base.sdn_http import SdnRequests
 from sdn_base.sdn_rest_dict import sdn_update_the_switch_stats as sdn_post
 
 def generate_sdn_rules(dpid, ports, controller_ip, table_id, priority):

@@ -115,8 +115,8 @@ def topology():
                 jitter=app_config.get("Path", "v4_path_5_jitter"), use_tbf=True)
     net.addLink(node1=r9, node2=r4, port1=1, port2=12, cls=TCLink, use_tbf=True)
 
-    r1.setMAC(mac='2e:1f:31:9c:61:ad', intf='r1-eth1')
-    r1.setMAC(mac='2a:5c:db:4a:fe:bc', intf='r1-eth2')
+    r1.setMAC(mac=app_config.get("General", "r1-eth1-mac"), intf='r1-eth1')
+    r1.setMAC(mac=app_config.get("General", "r1-eth2-mac"), intf='r1-eth2')
 
 
     # 7) Add physical link with usb ethernet interface to external PC
