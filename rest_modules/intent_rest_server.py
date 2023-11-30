@@ -9,7 +9,7 @@ from config.config_parser import app_config
 app = Flask(__name__)
 api = Api(app)
 
-# 解析器用于处理来自API的请求数据
+# set parameters to parse
 parser_put = reqparse.RequestParser()
 parser_put.add_argument("content_provider", type=str, required=True, help="need content provider")
 parser_put.add_argument("resolution", type=str, required=True, help="need resolution")
