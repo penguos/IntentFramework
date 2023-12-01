@@ -1,8 +1,8 @@
 import requests
 import collections
 
-from sdn_base.sdn_rest_dict import sdn_retrieve_the_switch_stats as sdn_get
-from sdn_base.sdn_rest_dict import sdn_update_the_switch_stats as sdn_post
+from sdn_rest_dict import sdn_retrieve_the_switch_stats as sdn_get
+from sdn_rest_dict import sdn_update_the_switch_stats as sdn_post
 
 class SdnRequests:
     """
