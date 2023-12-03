@@ -7,14 +7,14 @@ better path for incoming application flow.
 Since research work based on this framework is still ongoing, the actual eBPF code, algorithm and topology will be
 updated once this work can be published.
 
-Some hardcoded parameter and testing code are remained in each module, will be updated later.
+Some hardcoded parameters and testing codes are remained in each module, will be updated later.
 
 
 ### Folders:
 
 #### algorithm:
-  + algo_data_collect_tcp.py: read output file capture by linux ss tool, save as pandas datatype
-  + algo_data_parse_hologram.py: parse hologram output log file, save to .csv
+  + algo_data_collect_tcp.py: read output file captured by linux ss tool, save as pandas datatype
+  + algo_data_parse_hologram.py: parse hologram output log file, save to .csv file
   + algo_MAB.py: a collection of several popular MAB algorithms for further analysis of above data.
 
 #### config:
